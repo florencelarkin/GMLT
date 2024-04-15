@@ -177,8 +177,7 @@ var jsPsychGMT = (function (jspsych) {
                 var pressTime = Math.round(currentTime - start_time);
                 
 
-                if (pressedSquares.length >= 2) {
-                    console.log('hi');
+                if (pressedSquares.length >= 1) {
                     clearSquare('s' + prevSquare)
                 }
                 else {
