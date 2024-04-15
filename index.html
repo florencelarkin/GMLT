@@ -9,7 +9,6 @@
     <script src="./jspsych/plugin-gmt.js"></script>
     <script src="./main.js"></script>
     <link href="./jspsych/jspsych.css" rel="stylesheet" type="text/css" />
-    <script src="./lib/taskflow/client.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
@@ -17,34 +16,11 @@
   </body>
   <script>
     var jsPsych = initJsPsych({
-      on_finish: async function() {
-          
-          if (window.location !== window.parent.location) {
-                  // running on server so send data to the server
-                  var measure = await TaskFlow.Client.Measure.get();
-                  // get data out of jspsych
-                  var task_data = JSON.stringify(jsPsych.data.get().values());
-                  measure.complete = true;
-                  measure.json = task_data;
-                  // sync measure with server
-                  await TaskFlow.Client.Measure.set(measure);
-                  // continue on!
-                  TaskFlow.Client.Measure.end();
-                      }       
-              else {
-                  // running local
-                  // display the data
-                  jsPsych.data.displayData();
-                      }
-          
-        }
+      
     });
-    //IST
+
 var timeline = [];
-let pointsFixed = 0;
-let pointsDec = 0;
-let fixedWins = 0;
-let decWins= 0;
+
 let gridTotal = 25; //5x5 grid with 25 squares
 
 var path1 = [0, 1, 2, 3, 13, 14, 24, 23, 33, 32, 42, 41, 51, 61, 71, 72, 82, 81, 91, 92, 93, 94, 95, 96, 97, 98, 99]
