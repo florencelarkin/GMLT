@@ -136,6 +136,16 @@ var jsPsychGMT = (function (jspsych) {
             
           }
 
+          //not functioning yet
+          //need code to find lastCorrect
+          function mercyRule(lastCorrect) {
+            if (consecErrors >= 3) {
+                lastCorrect.style.backgroundColor = 'yellowgreen'
+            } else {
+              null;
+            }
+          }
+
           console.log(mazeList);
           //event listener for squares
           //TODO: add mercy rule - not in original cogstate task but could still be helpful (see flutter version)
@@ -174,7 +184,7 @@ var jsPsychGMT = (function (jspsych) {
                 else {
 
                 }
-                
+
                 
                 //after fn is called current square becomes prev square
                 prevSquare = idNum;
@@ -202,6 +212,7 @@ var jsPsychGMT = (function (jspsych) {
                     pressedSquares.push([id, pressTime, 'error']);
                     legalErrors++;
                     selectedSquare.style.backgroundColor = 'red'
+                    
                     totalErrors++;
                 }
                 else {
