@@ -214,6 +214,10 @@ var jsPsychGMT = (function (jspsych) {
                     
                     totalErrors++;
                 }
+                //returning to prev correct square
+                else if (squareLegal === false && onPath === true && consecErrors > 0) {
+                    selectedSquare.style.backgroundColor = 'yellowgreen'
+                }
                 else {
                     pressedSquares.push([id, pressTime, 'error']);
                     //illegal move
