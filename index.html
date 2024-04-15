@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GMLT</title>
+    <script src="./jspsych/jspsych.js"></script>
+    <script src="./jspsych/plugin-html-button-response.js"></script>
+    <script src="./jspsych/plugin-html-keyboard-response.js"></script>
+    <script src="jspsych/plugin-survey-text.js"></script>
+    <script src="./jspsych/plugin-gmt.js"></script>
+    <script src="./main.js"></script>
+    <link href="./jspsych/jspsych.css" rel="stylesheet" type="text/css" />
+    <script src="./lib/taskflow/client.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body>
+    
+  </body>
+  <script>
+    var jsPsych = initJsPsych({
+      on_finish: async function() {
+          
+          if (window.location !== window.parent.location) {
+                  // running on server so send data to the server
+                  var measure = await TaskFlow.Client.Measure.get();
+                  // get data out of jspsych
+                  var task_data = JSON.stringify(jsPsych.data.get().values());
+                  measure.complete = true;
+                  measure.json = task_data;
+                  // sync measure with server
+                  await TaskFlow.Client.Measure.set(measure);
+                  // continue on!
+                  TaskFlow.Client.Measure.end();
+                      }       
+              else {
+                  // running local
+                  // display the data
+                  jsPsych.data.displayData();
+                      }
+          
+        }
+    });
+    //IST
+var timeline = [];
+let pointsFixed = 0;
+let pointsDec = 0;
+let fixedWins = 0;
+let decWins= 0;
+let gridTotal = 25; //5x5 grid with 25 squares
+
+var path1 = [0, 1, 2, 3, 13, 14, 24, 23, 33, 32, 42, 41, 51, 61, 71, 72, 82, 81, 91, 92, 93, 94, 95, 96, 97, 98, 99]
+var path2 = [0, 1, 2, 3, 13, 12, 22, 21, 31, 41, 42, 43, 44, 34, 35, 25, 26, 36, 46, 47, 48, 58, 59, 69, 79, 89, 99]
+var path3 = [0, 10, 11, 12, 22, 21, 31, 32, 42, 52, 51, 61, 62, 72, 71, 81, 91, 92, 82, 83, 93, 94, 95, 96, 97, 98, 99]
+var path4 = [0, 10, 11, 21, 22, 13, 14, 15, 25, 24, 34, 33, 43, 44, 45, 35, 36, 46, 47, 57, 67, 77, 87, 97, 98, 99]
+var path5 = [0, 1, 2, 3, 4, 14, 15, 25, 35, 34, 44, 54, 53, 63, 62, 72, 82, 81, 91, 92, 93, 94, 95, 96, 97, 98, 99]
+var path6 = [0, 10, 20, 21, 11, 12, 13, 14, 15, 16, 26, 25, 35, 34, 44, 43, 53, 54, 64, 74, 75, 85, 95, 96, 97, 98, 99]
+var path7 = [0, 1, 11, 12, 13, 14, 24, 23, 33, 32, 42, 41, 51, 52, 53, 43, 44, 45, 55, 65, 66, 67, 77, 78, 88, 89, 99]
+var path8 = [0, 1, 11, 21, 22, 23, 33, 32, 42, 52, 62, 72, 71, 81, 82, 92, 93, 83, 84, 94, 95, 85, 86, 96, 97, 98, 99]
+var path9 = [0, 1, 11, 12, 22, 23, 13, 14, 15, 25, 24, 34, 33, 43, 42, 52, 62, 72, 82, 83, 84, 94, 95, 96, 97, 98, 99]
+var path10 = [0, 1, 2, 12, 11, 21, 22, 23, 24, 14, 15, 16, 17, 18, 19, 29, 28, 38, 37, 47, 48, 58, 68, 78, 79, 89, 99]
+var path11 = [0, 10, 11, 12, 13, 23, 22, 32, 31, 41, 51, 61, 71, 81, 82, 83, 73, 74, 64, 65, 66, 67, 68, 78, 79, 89, 99]
+var path12 = [0, 10, 20, 21, 11, 12, 22, 23, 24, 14, 15, 16, 26, 25, 35, 36, 37, 27, 28, 29, 39, 49, 59, 69, 79, 89, 99]
+var path13 = [0, 1, 2, 12, 11, 21, 22, 23, 13, 14, 15, 25, 24, 34, 35, 36, 26, 27, 28, 38, 39, 49, 59, 69, 79, 89, 99]
+var path14 = [0, 10, 20, 21, 11, 12, 22, 32, 31, 41, 42, 43, 33, 34, 24, 25, 26, 36, 37, 38, 48, 58, 59, 69, 79, 89, 99]
+var path15 = [0, 10, 20, 21, 11, 12, 13, 14, 15, 25, 24, 34, 44, 43, 53, 52, 62, 72, 82, 83, 84, 94, 95, 96, 97, 98, 99]
+var path16 = [0, 1, 11, 21, 22, 12, 13, 14, 24, 23, 33, 43, 42, 52, 62, 61, 71, 72, 82, 92, 93, 94, 95, 96, 97, 98, 99]
+var path17 = [0, 10, 11, 21, 22, 23, 13, 14, 15, 25, 24, 34, 33, 43, 42, 52, 62, 63, 73, 83, 93, 94, 95, 96, 97, 98, 99]
+var path18 = [0, 10, 20, 21, 11, 12, 13, 14, 15, 16, 26, 36, 35, 45, 44, 54, 53, 63, 73, 83, 93, 94, 95, 96, 97, 98, 99]
+var path19 = [0, 10, 20, 21, 11, 12, 22, 32, 31, 41, 51, 61, 62, 52, 53, 43, 44, 45, 46, 56, 66, 76, 86, 96, 97, 98, 99]
+var path20 = [0, 1, 2, 3, 4, 14, 13, 23, 33, 32, 42, 41, 51, 52, 53, 43, 44, 54, 55, 56, 57, 67, 68, 78, 88, 89, 99]
+
+var path_list = [path1, path2, path3, path4, path5, path6, path7, path8, path9, path10, path11, path12, path13, path14, path15, path16, path17, path18, path19, path20]
+
+
+function getMaze(arr) {
+  //pick random maze from list of mazes (arr will be path_list)
+  var maze = arr[(Math.floor(Math.random() * arr.length))]
+  return maze
+};
+
+
+var id_page = {
+  type: jsPsychSurveyText,
+  questions: [
+    {prompt: 'Participant ID', required: true},
+    {prompt: 'Session Number', required: true}
+  ]
+}
+
+
+var instructions = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `
+      <p>In this task, your goal is to figure out the hidden maze.
+      </p><p>You will always start with the top left square,</p>
+      <p>And the maze will always end on the bottom right square.</p>
+      <p>You will repeat the same hidden maze 5 times.</p>
+      
+    `,
+    choices: ['NEXT'],
+   
+  };
+
+  var instructions1 = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `
+      <p>There are a couple rules:
+      </p><p>1. You can move left, righ, up, or down but never diagonal.</p>
+      <p>2. You cannot skip squares.</p>
+      <p>3. If you choose the wrong square, make sure to go back to previous correct square before guessing again</p>
+      <p>Ask study staff if you have any questions before you get started.</p>
+    `,
+    choices: ['START'],
+    post_trial_gap: 2000
+  };
+
+
+var task = {
+    type: jsPsychGMT,
+    stimulus: getMaze(path_list),
+    data: {
+        task: 'response',
+        
+      },
+    on_finish: function(data){
+        
+      }
+};
+
+var post_trial_page = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: function() {
+      return '<p>Success!</p>'}
+    ,
+    choices: ['Continue'],
+  };
+
+
+
+var end_page = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: function() {
+      return '<p>Complete!</p><p>Press \'FINISH\' to exit the task</p>'}
+    ,
+    choices: ['FINISH'],
+    post_trial_gap: 2000
+  };
+
+
+//timeline.push(id_page, instructions, instructions1, task, post_trial_page, task, post_trial_page, task, post_trial_page, task, post_trial_page, task, end_page)
+timeline.push(id_page, instructions, instructions1, task, end_page);
+
+
+    jsPsych.run(timeline);
+  </script>
+</html>
