@@ -7,8 +7,8 @@
     <script src="./jspsych/plugin-html-keyboard-response.js"></script>
     <script src="jspsych/plugin-survey-text.js"></script>
     <script src="./jspsych/plugin-gmt.js"></script>
-    <script src="./main.js"></script>
-    <link href="./jspsych/jspsych.css" rel="stylesheet" type="text/css" />
+    <script src="jspsych/plugin-fullscreen.js"></script>
+    <link href="./jspsych/css/jspsych.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
@@ -124,8 +124,8 @@ var end_page = {
   };
 
 
-//timeline.push(id_page, instructions, instructions1, task, post_trial_page, task, post_trial_page, task, post_trial_page, task, post_trial_page, task, end_page)
-timeline.push(id_page, instructions, instructions1, task, end_page);
+timeline.push(id_page, instructions, instructions1, task, post_trial_page, task, post_trial_page, task, post_trial_page, task, post_trial_page, task, end_page)
+//timeline.push(id_page, instructions, instructions1, task, end_page);
 
 
     jsPsych.run(timeline);
