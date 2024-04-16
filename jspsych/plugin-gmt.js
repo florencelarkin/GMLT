@@ -73,7 +73,7 @@ var jsPsychGMT = (function (jspsych) {
             gridSquares += '<div class="sq1" id=s0></div>'
         }
         else if (i === 99) {
-            gridSquares += '<div class="sq99" id=s99><i style="font-size:48px;color:red;padding:8px" class="fa">&#xf140;</i></div>'
+            gridSquares += '<div class="sq99" id=s99><i style="font-size:48px;color:#882255;padding:8px" class="fa">&#xf140;</i></div>'
         }
         else {
             trial.stimulus.includes(i) ? gridSquares +='<div class="y" id=s' + i + '></div>' : gridSquares +='<div class="b" id=s' + i + '></div>';
@@ -140,14 +140,22 @@ var jsPsychGMT = (function (jspsych) {
           //need code to find lastCorrect
           function mercyRule(lastCorrect) {
             if (consecErrors >= 3) {
-                lastCorrect.style.backgroundColor = 'yellowgreen'
+                lastCorrect.style.backgroundColor = '#117733'
             } else {
               null;
             }
           }
 
+          function showSymbol(square, color) {
+            square.style.color = color;
+            square.style.transition = "color 1000ms";
+            square.style.color = 'lightskyblue';
+            square.style.backgroundColor = 'lightskyblue';
+          }
+
           console.log(mazeList);
           //event listener for squares
+
           //TODO: add mercy rule - not in original cogstate task but could still be helpful (see flutter version)
           //TODO: flashing green check or flashing red x? still want to keep square 'lit up' to reduce pt confusion
           for (var i = 0; i < 100; i++) {
@@ -193,48 +201,59 @@ var jsPsychGMT = (function (jspsych) {
                     pressedSquares.push([id, pressTime, 'correct']);
                     correctCount++;
                     consecErrors > 0 ? returnCount++ : returnCount = returnCount;
+                    //display a check if guess is correct
+                    selectedSquare.innerHTML = '✓';
+                    showSymbol(selectedSquare, '#117733');
+                    
                     if (idNum === 99) {
                         //if square is correct and square is last on path, end trial
-                        selectedSquare.style.backgroundColor = 'yellowgreen'
+                        selectedSquare.style.backgroundColor = '#117733'
                         after_response();
                     }
-                    else {
-                    selectedSquare.style.backgroundColor = 'yellowgreen'
-                    
-                    //reset consecutive errors
-                    consecErrors = 0;
+                    else { 
+                        showSymbol(selectedSquare, '#117733');
+                        //reset consecutive errors
+                        consecErrors = 0;
                      }
                 
                 }
                 else if (squareLegal === true && onPath === false) {
                     //legal but wrong guess
+                    //display an X if guess is wrong
+                    selectedSquare.innerHTML = 'X';
+
                     pressedSquares.push([id, pressTime, 'error']);
                     legalErrors++;
-                    selectedSquare.style.backgroundColor = 'red'
-                    
                     totalErrors++;
+
+                    showSymbol(selectedSquare, '#882255');
+
                 }
+                //ADD condition for incorrect if same sq is pressed twice in a row!!!!!
                 //returning to prev correct square
                 else if (squareLegal === false && onPath === true && consecErrors > 0) {
-                    selectedSquare.style.backgroundColor = 'yellowgreen'
-                }
-                else {
-                    pressedSquares.push([id, pressTime, 'error']);
-                    //illegal move
-                    selectedSquare.style.backgroundColor = 'red'
-                    totalErrors++;
-                    consecErrors++;
+                    //display a check to indicate correct
+                    selectedSquare.innerHTML = '✓';
+                    showSymbol(selectedSquare, '#117733');
                     
                 }
+                else {
+                    //illegal move
+                    //display an X if move is illegal
+                    pressedSquares.push([id, pressTime, 'error']);
+                    selectedSquare.innerHTML = 'X';
+                    
+                    totalErrors++;
+                    consecErrors++;
 
-               
-               
-                
-            });
-            
+                    showSymbol(selectedSquare, '#882255');
+   
+                }   
+            });    
         } 
 
         function clearSquare(id) {
+            document.getElementById(id).innerHTML = "";
             document.getElementById(id).style.backgroundColor = "gray";
           }
           

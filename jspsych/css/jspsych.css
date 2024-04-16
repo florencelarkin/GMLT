@@ -12,25 +12,34 @@
 .y {
   background-color: gray;
   border: 1px solid rgba(0, 0, 0, 0.8);
-  padding: 30px;
-  font-size: 20px;
+  padding: 10px;
+  font-size: 48px;
   text-align: center;
+  color: #117733;
+  font-weight: bold;
+  cursor: pointer;
 }
 
   .b {
     background-color: gray;
     border: 1px solid rgba(0, 0, 0, 0.8);
-    padding: 30px;
-    font-size: 20px;
+    padding: 10px;
+    font-size: 48px;
+    font-weight: bold;
     text-align: center;
+    color: #882255;
+    cursor: pointer;
   }
 
   .sq1 {
     background-color: lightskyblue;
     border: 1px solid rgba(0, 0, 0, 0.8);
-    padding: 30px;
-    font-size: 20px;
+    padding: 10px;
+    font-size: 48px;
+    font-weight: bold;
     text-align: center;
+    color: #117733;
+    cursor: pointer;
   }
 
   .sq99 {
@@ -38,8 +47,9 @@
     border: 1px solid rgba(0, 0, 0, 0.8);
     padding: 0px;
     font-size: 20px;
-    color: red;
+    color: #882255;
     text-align: center;
+    cursor: pointer;
   }
 
 
