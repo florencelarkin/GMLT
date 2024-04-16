@@ -65,7 +65,6 @@ var jsPsychGMT = (function (jspsych) {
       }
       trial(display_element, trial) {
       // display stimulus
-      let wins = 0;
       
       var gridSquares = '';
       for (var i = 0; i < 100; i++) {
@@ -136,14 +135,25 @@ var jsPsychGMT = (function (jspsych) {
             
           }
 
-          //not functioning yet
-          //need code to find lastCorrect
-          function mercyRule(lastCorrect) {
+          
+          function mercyRule(pressedSquares) {
             if (consecErrors >= 3) {
-                lastCorrect.style.backgroundColor = '#117733'
-            } else {
-              null;
+            for (var i = 1; i < pressedSquares.length; i++) {
+                let lastElement = pressedSquares[pressedSquares.length - i];
+                if (lastElement.includes('correct'))
+                {
+                    let id = lastElement[0];
+                    document.getElementById(id).style.backgroundColor = 'lightskyblue';
+                }
+                else {
+
+                } 
+                }
             }
+            else {
+
+            }
+            
           }
 
           function showSymbol(square, color) {
@@ -163,6 +173,7 @@ var jsPsychGMT = (function (jspsych) {
             display_element
                 .querySelector("#s" + i)
                 .addEventListener("click", (e) => {
+                mercyRule(pressedSquares);
                 var selectedSquare = e.currentTarget;
                 //record which square was pressed and when (keep)
                 //selectedList.push(selectedSquare);
@@ -192,9 +203,7 @@ var jsPsychGMT = (function (jspsych) {
 
                 }
 
-                
-                //after fn is called current square becomes prev square
-                prevSquare = idNum;
+            
 
                  //change the color
                 if (squareLegal === true && onPath === true) {
@@ -211,6 +220,7 @@ var jsPsychGMT = (function (jspsych) {
                         after_response();
                     }
                     else { 
+                        selectedSquare.innerHTML = '✓';
                         showSymbol(selectedSquare, '#117733');
                         //reset consecutive errors
                         consecErrors = 0;
@@ -230,12 +240,25 @@ var jsPsychGMT = (function (jspsych) {
 
                 }
                 //ADD condition for incorrect if same sq is pressed twice in a row!!!!!
-                //returning to prev correct square
+               else if (prevSquare === idNum && consecErrors === 0) {
+                console.log('here');
+                    pressedSquares.push([id, pressTime, 'error']);
+                    selectedSquare.style.color = '#882255';
+                    selectedSquare.innerHTML = 'X';
+                    
+                    totalErrors++;
+                    consecErrors++;
+
+                    showSymbol(selectedSquare, '#882255');
+                    
+                }
+                 //returning to prev correct square
                 else if (squareLegal === false && onPath === true && consecErrors > 0) {
                     //display a check to indicate correct
+                    pressedSquares.push([id, pressTime, 'correct']);
                     selectedSquare.innerHTML = '✓';
                     showSymbol(selectedSquare, '#117733');
-                    
+                    returnCount++;
                 }
                 else {
                     //illegal move
@@ -248,13 +271,17 @@ var jsPsychGMT = (function (jspsych) {
 
                     showSymbol(selectedSquare, '#882255');
    
-                }   
+                }
+                
+                //after fn is called current square becomes prev square
+                prevSquare = idNum;
             });    
         } 
 
         function clearSquare(id) {
             document.getElementById(id).innerHTML = "";
             document.getElementById(id).style.backgroundColor = "gray";
+            document.getElementById(id).className === 'y' ||  document.getElementById(id).className === 'sq1' ? document.getElementById(id).style.color = '#117733' :  document.getElementById(id).style.color = '#882255';
           }
           
           // store response
