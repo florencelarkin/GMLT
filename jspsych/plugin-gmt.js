@@ -72,7 +72,7 @@ var jsPsychGMT = (function (jspsych) {
             gridSquares += '<div class="sq1" id=s0></div>'
         }
         else if (i === 99) {
-            gridSquares += '<div class="sq99" id=s99><i style="font-size:48px;color:#882255;padding:8px" class="fa">&#xf140;</i></div>'
+            gridSquares += '<div class="sq99" id=s99><i style="font-size:48px;padding:0px;text-align: center;color:#882255;" class="fa">&#xf140;</i></div>'
         }
         else {
             trial.stimulus.includes(i) ? gridSquares +='<div class="y" id=s' + i + '></div>' : gridSquares +='<div class="b" id=s' + i + '></div>';
@@ -156,6 +156,24 @@ var jsPsychGMT = (function (jspsych) {
             
           }
 
+          //will be called to reset the innerHTML and color - need to implement
+          function resolveAfter2Seconds() {
+            return new Promise((resolve) => {
+              setTimeout(() => {
+                resolve('resolved');
+              }, 1000);
+            });
+          }
+          
+          async function resetSymbol() {
+            console.log('calling');
+            const result = await resolveAfter2Seconds();
+            console.log(result);
+            // Expected output: "resolved"
+          }
+          
+          resetSymbol();
+
           function showSymbol(square, color) {
             square.style.color = color;
             square.style.transition = "color 1000ms";
@@ -166,8 +184,7 @@ var jsPsychGMT = (function (jspsych) {
           console.log(mazeList);
           //event listener for squares
 
-          //TODO: add mercy rule - not in original cogstate task but could still be helpful (see flutter version)
-          //TODO: flashing green check or flashing red x? still want to keep square 'lit up' to reduce pt confusion
+          
           for (var i = 0; i < 100; i++) {
             
             display_element
@@ -214,7 +231,7 @@ var jsPsychGMT = (function (jspsych) {
                     selectedSquare.innerHTML = '✓';
                     showSymbol(selectedSquare, '#117733');
                     
-                    if (idNum === 99) {
+                    if (idNum === 99 && pressedSquares.length > 26) {
                         //if square is correct and square is last on path, end trial
                         selectedSquare.style.backgroundColor = '#117733'
                         after_response();
