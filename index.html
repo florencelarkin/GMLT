@@ -80,9 +80,9 @@ var instructions = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
       <p>There are a couple rules:
-      </p><p>1. You can move left, righ, up, or down but never diagonal.</p>
+      </p><p>1. You can move left, right, up, or down but never diagonal.</p>
       <p>2. You cannot skip squares.</p>
-      <p>3. If you choose the wrong square, make sure to go back to previous correct square before guessing again</p>
+      <p>3. If you choose the wrong square, make sure to go back to the previous correct square by cicking on it before guessing again.</p>
       <p>Ask study staff if you have any questions before you get started.</p>
     `,
     choices: ['START'],
@@ -122,7 +122,7 @@ var end_page = {
   };
 
 
-timeline.push(id_page, instructions, instructions1, task, post_trial_page, task, post_trial_page, task, post_trial_page, task, post_trial_page, task, end_page)
+timeline.push(id_page, instructions, instructions1, task, post_trial_page, task, post_trial_page, task, post_trial_page, task, post_trial_page, task, post_trial_page, end_page)
 //timeline.push(id_page, instructions, instructions1, task, end_page);
 
 
